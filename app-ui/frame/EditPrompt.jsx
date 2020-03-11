@@ -29,6 +29,7 @@ export default class EditPrompt extends React.Component {
       where: WHERE_LOCAL,
       title: '',
       url: '',
+      data_path: '',
       last_refresh: null,
       refresh_interval: 0,
       is_loading: false,
@@ -49,6 +50,7 @@ export default class EditPrompt extends React.Component {
       where: WHERE_LOCAL,
       title: '',
       url: '',
+      data_path: '',
       last_refresh: null,
       refresh_interval: 0
     })
@@ -85,6 +87,7 @@ export default class EditPrompt extends React.Component {
         where: hosts.where || WHERE_LOCAL,
         title: hosts.title || '',
         url: hosts.url || '',
+        data_path: hosts.data_path || '',
         last_refresh: hosts.last_refresh || null,
         refresh_interval: hosts.refresh_interval || 0,
         include
@@ -257,6 +260,18 @@ export default class EditPrompt extends React.Component {
               onChange={e => this.setState({url: e.target.value})}
               onKeyDown={e => (e.keyCode === 13 && this.onOK()) || (e.keyCode === 27 && this.onCancel())}
               maxLength={1024}
+            />
+          </div>
+        </div>
+        <div className="ln">
+          <div className="title">{lang.data_path}</div>
+          <div className="cnt">
+            <Input
+                ref={c => this.el_path = c}
+                value={this.state.data_path}
+                placeholder="data.content，支持结果是数组或者字符串"
+                onChange={e => this.setState({data_path: e.target.value})}
+                maxLength={1024}
             />
           </div>
         </div>

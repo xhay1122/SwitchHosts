@@ -15,6 +15,7 @@ const valid_keys = [
   'where', // type
   'folder_mode',
   'url',
+  'data_path',
   'last_refresh',
   'refresh_interval',
   'include',

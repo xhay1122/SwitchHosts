@@ -28,6 +28,7 @@ exports.content = {
   , day: '天'
   , days: '天'
   , default: '默认'
+  , data_path: '数据路径'
   , del_scheme: '删除当前方案'
   , edit: '编辑'
   , edit_hosts: '修改 hosts'
