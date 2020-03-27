@@ -6,9 +6,10 @@ Homepage: [https://oldj.github.io/SwitchHosts/](https://oldj.github.io/SwitchHos
 
 SwitchHosts! is an App for managing hosts file, it is based on [Electron](http://electron.atom.io/), [React](https://facebook.github.io/react/), [Ant Design](https://ant.design), [CodeMirror](http://codemirror.net/), etc.
 
-## ChangeLog
+## Myself ChangeLog
 ### 2020.03.27
 - Remote hosts support json path
+- Remote/Group hosts support copy
 
 ## Screenshot
 

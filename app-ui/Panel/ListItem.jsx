@@ -5,7 +5,7 @@
 
 'use strict'
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import classnames from 'classnames'
 import { Icon, Tree } from 'antd'
 import Agent from '../Agent'
@@ -43,6 +43,10 @@ export default class ListItem extends React.Component {
 
   toEdit () {
     Agent.emit('edit_hosts', Object.assign({}, this.props.data))
+  }
+
+  toCopy () {
+    Agent.emit('copyadd_hosts', Object.assign({}, this.props.data))
   }
 
   componentDidMount () {
@@ -117,11 +121,18 @@ export default class ListItem extends React.Component {
         {sys ? null : (
           <div className={styles['item-buttons']}>
             {is_selected ? (
-              <Icon
-                type="form"
-                onClick={this.toEdit.bind(this)}
-                className={styles['icon-edit']}
-              />
+                <Fragment>
+                  {[WHERE_REMOTE, WHERE_GROUP].indexOf(where) !== -1 ? (<Icon
+                      type="file-add"
+                      onClick={this.toCopy.bind(this)}
+                      className={styles['icon-edit']}
+                  />) : null}
+                  <Icon
+                      type="form"
+                      onClick={this.toEdit.bind(this)}
+                      className={styles['icon-edit']}
+                  />
+                </Fragment>
             ) : null}
             <Icon
               className={styles.switcher}

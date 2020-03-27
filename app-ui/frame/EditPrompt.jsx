@@ -58,6 +58,7 @@ export default class EditPrompt extends React.Component {
 
   componentDidMount () {
     Agent.on('add_hosts', (title, uri) => {
+      this.current_hosts = null;
       let goWhere = WHERE_LOCAL
       if (uri) {
         goWhere = WHERE_REMOTE
@@ -89,6 +90,27 @@ export default class EditPrompt extends React.Component {
         url: hosts.url || '',
         data_path: hosts.data_path || '',
         last_refresh: hosts.last_refresh || null,
+        refresh_interval: hosts.refresh_interval || 0,
+        include
+      })
+      setTimeout(() => {
+        this.tryToFocus()
+      }, 100)
+    })
+
+    Agent.on('copyadd_hosts', (hosts) => {
+      this.current_hosts = null;
+      let include = hosts.include || []
+      include = Array.from(new Set(include))
+
+      this.setState({
+        // id: hosts.id,
+        show: true,
+        is_add: true,
+        where: hosts.where || WHERE_LOCAL,
+        title: hosts.title || '',
+        url: hosts.url || '',
+        data_path: hosts.data_path || '',
         refresh_interval: hosts.refresh_interval || 0,
         include
       })
@@ -155,6 +177,11 @@ export default class EditPrompt extends React.Component {
 
     delete data['is_add']
     Agent.emit('update_hosts', data)
+
+    if(this.state.where === WHERE_REMOTE) {
+      // 远程接口保存时 立即触发刷新
+      Agent.emit('check_hosts_refresh', data);
+    }
 
     this.setState({
       show: false
@@ -253,9 +280,10 @@ export default class EditPrompt extends React.Component {
         <div className="ln">
           <div className="title">{lang.url}</div>
           <div className="cnt">
-            <Input
+            <Input.TextArea
               ref={c => this.el_url = c}
               value={this.state.url}
+              rows={3}
               placeholder="http:// or file:///"
               onChange={e => this.setState({url: e.target.value})}
               onKeyDown={e => (e.keyCode === 13 && this.onOK()) || (e.keyCode === 27 && this.onCancel())}
