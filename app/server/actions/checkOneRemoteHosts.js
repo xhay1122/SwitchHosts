@@ -5,7 +5,7 @@
 
 'use strict'
 
-const lodashGet = require('lodash/get');
+const deepGet = require('../deepGet');
 const getUrl = require('./getUrl')
 const isExpired = require('../checkIsExpired')
 const lineBreakTransform = require('../../libs/lineBreakTransform')
@@ -21,7 +21,7 @@ function fixContent(json, dataPath) {
   }
   try {
     const obj = JSON.parse(json);
-    const content = lodashGet(obj, dataPath);
+    const content = deepGet(obj, dataPath);
     if (Array.isArray(content)) {
       // 结果是数组 使用join方法变成字符串
       return content.join('\n');
